@@ -1,3 +1,17 @@
 // Remember, we're gonna use strict mode in all scripts now!
 'use strict';
 
+const x = 23;
+
+const calcAge = birthYear => 2037 - birthYear;
+
+console.log();
+
+// FIXME IMP
+
+const val = 18;
+if (val === 18) {
+  console.log('you are adult now');
+}
+
+c;
