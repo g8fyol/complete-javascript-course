@@ -114,3 +114,36 @@ for (let i = 0; i < yearss.length; i++) {
 }
 console.log(yearss);
 console.log(ages);
+
+friends.push("jay", "name", "new friend");
+console.log(friends);
+friends.unshift("jayfront", "name front");
+console.log(friends);
+
+friends.pop();
+console.log(friends);
+friends.shift();
+console.log(friends);
+
+const testArray = [];
+console.log(testArray.pop()); //pop from empty array returns undefinded;
+
+console.log(friends.indexOf("steven", 0));
+
+//objects
+const jonas = {
+  firstName: "jonas",
+  lastName: "sch",
+  birthYear: 1981,
+  calcAge: function () {
+    this.age = 2037 - this.birthYear;
+    return this.age;
+  },
+  getInfo: function () {
+    const infotoget = prompt("enter the name of property you want to access");
+    return `you want to know ${infotoget} and the info is ${this[infotoget]}`;
+  },
+};
+
+console.log(jonas.calcAge());
+console.log(jonas.getInfo());
