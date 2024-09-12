@@ -120,3 +120,123 @@ for (const [team, valueOdd] of allOdd) {
 //         Hummels: 1,
 //         Lewandowski: 2
 //       }
+// scored: ["Lewandowski", "Gnarby", "Lewandowski", "Hummels"],
+const scorers = {};
+
+for (const player of game.scored) {
+  scorers[player] ? scorers[player]++ : (scorers[player] = 1);
+}
+console.log(scorers);
+
+// Coding Challenge #3
+
+/* 
+Let's continue with our football betting app! This time, we have a map with a log of the events that happened during the game. The values are the events themselves, and the keys are the minutes in which each event happened (a football game has 90 minutes plus some extra time).
+
+*/
+
+const gameEvents = new Map([
+  [17, "⚽️ GOAL"],
+  [36, "🔁 Substitution"],
+  [47, "⚽️ GOAL"],
+  [61, "🔁 Substitution"],
+  [64, "🔶 Yellow card"],
+  [69, "🔴 Red card"],
+  [70, "🔁 Substitution"],
+  [72, "🔁 Substitution"],
+  [76, "⚽️ GOAL"],
+  [80, "⚽️ GOAL"],
+  [92, "🔶 Yellow card"],
+]);
+/*4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) of the game, like this:
+      [FIRST HALF] 17: ⚽️ GOAL */
+
+for (const [key, value] of gameEvents) {
+  key < 45
+    ? console.log(`[FIRST HALF] ${key} : ${value}`)
+    : console.log(`[SECOND HALF] ${key}: ${value}`);
+}
+// 1. Create an array 'events' of the different game events that happened (no duplicates)
+const events = [...new Set(gameEvents.values())];
+console.log(events);
+
+// 2. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from the game events log.
+// console.log(gameEvents.size);
+gameEvents.delete(64);
+console.log(gameEvents);
+// 3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
+const lastel = [...gameEvents.keys()];
+console.log(lastel[lastel.length - 1] + " and " + gameEvents.size);
+console.log(
+  `An event happened, on average, every ${
+    lastel[lastel.length - 1] / gameEvents.size
+  } minutes`
+);
+console.log(gameEvents.keys());
+// Coding Challenge #4
+
+// Write a program that receives a list of variable names written in underscore_case and convert them to camelCase.
+/* 
+The input will come from a textarea inserted into the DOM (see code below), and conversion will happen when the button is pressed.
+
+THIS TEST DATA (pasted to textarea)
+underscore_case
+ first_name
+Some_Variable 
+  calculate_AGE
+delayed_departure
+ */
+const underToCamel = function (name) {
+  const str = name.toLowerCase().trim();
+  const splitstr = str.split("_");
+  // console.log(splitstr.length);
+  for (let i = 1; i < splitstr.length; i++) {
+    splitstr[i] = splitstr[i][0].toUpperCase() + splitstr[i].slice(1);
+  }
+  console.log(splitstr);
+  return splitstr.join("");
+};
+console.log(underToCamel("underscore_case"));
+console.log(underToCamel("first_name"));
+console.log(underToCamel("Some_Variable"));
+console.log(underToCamel("calculate_AGE"));
+console.log(underToCamel("delayed_departure"));
+
+//dom
+document.body.append(document.createElement("textarea"));
+document.body.append(document.createElement("button"));
+
+document.querySelector("button").addEventListener("click", function () {
+  const userInput = document.querySelector("textarea").value;
+  const rows = userInput.split("\n");
+  console.log(rows);
+
+  for (const [i, row] of rows.entries()) {
+    const splitarr = row.toLowerCase().trim().split("_");
+    for (let i = 1; i < splitarr.length; i++) {
+      splitarr[i] = splitarr[i][0].toUpperCase() + splitarr[i].slice(1);
+    }
+    console.log(splitarr.join("").padEnd(20, " ") + `${"✅".repeat(i + 1)}`);
+  }
+});
+/* 
+
+
+
+
+SHOULD PRODUCE THIS OUTPUT (5 separate console.log outputs)
+underscoreCase      ✅
+firstName           ✅✅
+someVariable        ✅✅✅
+calculateAge        ✅✅✅✅
+delayedDeparture    ✅✅✅✅✅
+
+HINT 1: Remember which character defines a new line in the textarea 😉
+HINT 2: The solution only needs to work for a variable made out of 2 words, like a_b
+HINT 3: Start without worrying about the ✅. Tackle that only after you have the variable name conversion working 😉
+HINT 4: This challenge is difficult on purpose, so start watching the solution in case you're stuck. Then pause and continue!
+
+Afterwards, test with your own test data!
+
+GOOD LUCK 😀
+*/
