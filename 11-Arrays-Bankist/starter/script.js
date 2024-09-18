@@ -71,6 +71,81 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+let movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
+//slice
+console.log(movements.slice()); //gives shallow copy of existing array
+console.log(movements.slice(1, -1));
+console.log(movements.slice(-1));
+//returns an array IMP also it don't modify or mutate the original array
+
+//splice it mutates original array removing the part mentioned in it from the original array
+console.log(movements.splice(-1)); //just remove last elment from original array
+//splice (start index, count number of elements which we want to delete)
+//splice(start, count, items to add inplace)
+// console.log(movements);
+// console.log(movements.splice(1, 4));
+// console.log(movements);
+// console.log(movements.splice(1)); //if only 1 arguemt is given then
+// console.log(movements);
+console.log(movements);
+console.log(movements.splice(0, Infinity, 'item1', 'item2'));
+console.log(movements);
+console.log(movements.splice());
+console.log(movements);
+console.log(movements.splice(0, 0, 'replace'));
+// console.log(movements.splice(undefined));
+console.log(movements);
+
+movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const arr = ['a', 'b', 'c', 'd', 'e'];
+//reverse
+arr.reverse(); //it returns a new array IMP mutating the original array
+console.log(arr);
+//concat - doesn't mutate original array
+console.log(arr.concat(movements));
+
+//join method takes an array and joins it using separtor and return a string
+console.log(movements.join('-'));
+console.log(movements);
+
+//ES2022 - .at() method like indexing
+console.log(movements[0]);
+console.log(movements.at(0));
+
+//getting last element got much more easier with at() method
+console.log(movements[movements.length - 1]);
+console.log(movements.slice(-1)[0]);
+console.log(movements.at(-1));
+
+//forEach method is a higher order method that takes in callback function and calls the callback funtion for each iteration over the array elements
+//IMP forEach don't suppost break and countinue statements it will iterate over entire array so use for...of incase we want to break or continue
+//IMP arguments passed are
+// arr.forEach(currentElement, index, arr)
+// map.forEach(value, key, map);
+// set.forEach(value, _ , set); //as sets neither have key nor index so 2nd index is just set to value as first index so not that useful
+
+movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+movements.forEach(function (move, index, arr) {
+  move > 0
+    ? console.log(`movement ${index}: deposited ${move}`)
+    : console.log(`movement ${index}: withdrawl of ${move}`);
+});
+
+const maps = new Map([
+  ['usd', 'united states dollar'],
+  ['eur', 'europe'],
+  ['rs', 'rupees india'],
+]);
+maps.forEach(function (vals, key, map) {
+  console.log(`${key}: ${vals}`);
+});
+
+const sets = new Set(['usd', 'rs', 'euro', 'rs', 'usd']);
+sets.forEach(function (val, _, set) {
+  console.log(`${val}`);
+});
+
+const mapss = new Map(Object.entries({ key: 'value', 7: '34', 45: 343 }));
+console.log(mapss);
 /////////////////////////////////////////////////

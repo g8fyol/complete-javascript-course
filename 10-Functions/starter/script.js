@@ -266,3 +266,81 @@ booker();
 
 //as closure is js feature that happens automatically we don't need to manually do this also we can't access in our code directly as it is not any random java object or any data structure. but we can view it in browser console
 console.dir(booker);
+
+//IMP we don't need to return a function from other function to have closure behaviour visible
+
+let f;
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a * 2);
+  };
+};
+const h = function () {
+  const b = 777;
+  f = function () {
+    console.log(b * 2);
+  };
+};
+//f variable close over any variable which is defined in the execution context in which it is created
+g();
+f();
+console.dir(f);
+h();
+f();
+console.dir(f);
+
+//example 2
+const boardPassanger = function (num, wait) {
+  const psgGroup = num; //3;
+
+  setTimeout(() => {
+    console.log(`we are now boarding all ${num} passangers`);
+    console.log(`there are 3 groups, each with ${psgGroup} passengers`);
+  }, wait * 1000);
+  //so here settimout function's callback function is created in boardPassanger function so it has access to it's variable environmet which includes arguments
+  console.log(`will start boarding in ${wait} seconds`);
+};
+const psgGroup = 2343;
+//this psgGroup will not be used as closure have higher priority then scope chain even the function is begin executed in global scope
+boardPassanger(180, 6);
+console.dir(boardPassanger);
+
+//example
+let globalVar = 'I am global';
+function outer() {
+  let outerVar = 'I am from outer';
+
+  return function inner() {
+    let innerVar = 'I am from Inner';
+    console.log(innerVar);
+    console.log(outerVar);
+    console.log(globalVar);
+  };
+}
+
+const getFunction = outer();
+getFunction();
+console.dir(getFunction);
+
+// Coding Challenge #2
+
+/* 
+This is more of a thinking challenge than a coding challenge 🤓
+
+Take the IIFE below and at the end of the function, attach an event listener that changes the color of the selected h1 element ('header') to blue, each time the BODY element is clicked. Do NOT select the h1 element again!
+
+And now explain to YOURSELF (or someone around you) WHY this worked! Take all the time you need. Think about WHEN exactly the callback function is executed, and what that means for the variables involved in this example.
+
+GOOD LUCK 😀
+*/
+
+(function () {
+  const header = document.querySelector('h1');
+  header.style.color = 'red';
+  document.querySelector('body').addEventListener('mousedown', () => {
+    header.style.color = 'blue';
+  });
+})();
+
+//IIFE immedietly invoked function expression trick js in beliving that they are not function statement rather they are just expression (used of encapulation (earlier ) and if we want to execute a function exactly once); now call back function defined as event listners remembers the varible enviroment of it's parent in which it was created so it can be access header varible even it is excuted long after the "only once executable function is executed and it's exection context is removed from the call stack" ---> all hail closures
