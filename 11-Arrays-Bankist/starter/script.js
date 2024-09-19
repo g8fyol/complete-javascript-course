@@ -149,3 +149,111 @@ sets.forEach(function (val, _, set) {
 const mapss = new Map(Object.entries({ key: 'value', 7: '34', 45: 343 }));
 console.log(mapss);
 /////////////////////////////////////////////////
+
+//more ways of creating an array
+const arr2 = [34, 442, 23, 43];
+console.log(arr2);
+//array constructor creates array object
+const arr3 = new Array();
+//we can call Array wihout new both will create array instances
+
+//when array is constructed with a single parameter then a new array object with length = argument is created with array elments are just empty slots
+const arr4 = Array(6);
+//we can't use any array iteration methods like
+const resultarr = arr4.map(() => true);
+console.log(resultarr); //bcz empty spaces are just skipped
+//but in some cases they are treated as undefined
+const arrtestt = [...arr4];
+console.log(arrtestt);
+console.log(arr4[0]);
+const arrtest = [];
+for (const [key, value] of arr4.entries()) {
+  arrtest[key] = value;
+}
+//for loop works
+
+console.log('test');
+console.log(arrtest);
+console.log('test');
+console.log(arr4);
+console.log(arr4[0]); //undefined but actully it is an empty slot
+
+console.log(0 in arr4);
+
+const arrofone = Array('2');
+console.log(arrofone);
+
+const fruits = new Array('apple,', 'gdgdag', 'dsf');
+console.log(fruits);
+
+//fill method = it changes all elements within a range of indices in an array it mutates the original array
+
+const arra = [1, 2, 3, 4];
+console.log(arra.fill(10, 2, 3)); //[2,)
+
+console.log(arra.fill(4));
+
+//mostly used to fill empty slots in an sparse array
+const arrb = new Array(6).fill('boy', 0);
+console.log(arrb);
+console.log(arrb.fill(9, 2, 4));
+console.log(arrb.fill(4, 0, 8)); //not any empty slot or extra slot will be created
+arrb[14] = 56; // a lot of empty spaces will be created
+console.log(arrb);
+
+//from method in array namespace
+
+//Array.from() method creates a new , shallow copied Array instance from an itreable or arrraylike object IMP
+
+//Array.from(arraylike/iterable, mapfunctiontomapvaluesofarraylikeobj, thisArg:valuetouseasthiswhenexecutingmapfunction)
+//it returns a new array instance
+
+console.log(Array.from('apna'));
+console.log(Array.from([1, 2, 3], x => 2 * x));
+
+console.log(Array.from({ length: 7 }, x => 2 * x));
+//it can take iterable and convert it into array
+//or we will need arraylike object (with length and indexed elements)
+//for missing indexed elements it will put undefined there
+console.log(
+  Array.from({ 1: 'name', 2: 'okay', length: 5 }, (curr, index) => curr + 'i')
+);
+
+const setss = new Set(['foo', 'foot', 'foo', , 'foot', 'bar']);
+console.log(Array.from(setss));
+
+const frommaps = new Map([
+  [1, 2],
+  [1, 3],
+  [4, 5],
+  [10, 12],
+]);
+console.log(frommaps);
+console.log(Array.from(frommaps.values()));
+console.log(Array.from(frommaps.keys()));
+console.log(Array.from(frommaps));
+// const movementss = document.querySelectorAll();
+
+//create an array with 100 random dice rolls
+
+const dicerollsrandom = function (rollsneeded) {
+  const arr = new Array(rollsneeded);
+  return Array.from(arr, () => Math.trunc(Math.random() * 6 + 1));
+};
+
+console.log(dicerollsrandom(100));
+
+//homework
+console.log('==home work==');
+const midPoint = function (x, y) {
+  return +((x + y) / 2).toFixed(4);
+};
+const mid = midPoint(1.8554, 1.8556);
+
+const calcValue = function (mid) {
+  const valueAnswer = mid ** 4 - mid - 10;
+  return valueAnswer;
+};
+const value = calcValue(mid);
+console.log(mid + ' is mid');
+console.log(value + ' is value');

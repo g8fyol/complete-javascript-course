@@ -1,0 +1,243 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #f3f3f3;
+  height: 100vh;
+  padding: 2rem;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 32px;
+  padding: 0 2rem;
+}
+.welcome {
+  font-weight: 400;
+  font-size: 2rem;
+}
+.logo {
+  width: 60px;
+}
+.login_inp {
+  border: none;
+  text-decoration: none;
+  background-color: #ffffff;
+  font-size: 16px;
+  border-radius: 45px;
+  text-align: center;
+  padding: 10px;
+  outline: none;
+  /* border: 0px transparent gray; */
+
+  /* box-shadow: 2px 2px 7px 5px whitesmoke; */
+}
+.login_inp:focus {
+  outline: none;
+  border: 1px solid #ccc;
+}
+.login_inpu::placeholder {
+  color: #bbb;
+}
+
+.login_btn {
+  border: none;
+  text-decoration: none;
+  background: none;
+  font-size: 1em;
+  color: inherit;
+  cursor: pointer;
+}
+
+.login_btn:hover,
+.login_btn:focus {
+  outline: none;
+  color: #777;
+}
+
+/* main app  */
+.app {
+  /* position: relative; */
+  margin: 4rem auto;
+  display: grid;
+  /* grid-template-columns: repeat(2, minmax(100px, 1fr)); */
+  grid-template-columns: 4fr 3fr;
+  grid-template-rows: auto repeat(3, 10em) auto;
+  gap: 1em;
+  max-width: 80rem;
+}
+
+.balance {
+  grid-column: 1/3;
+  grid-row: 1 /2;
+  display: flex;
+  padding-block: 1em;
+  justify-content: space-between;
+  align-items: center;
+}
+.balance_label {
+  font-size: 2em;
+}
+.balance_date {
+  color: #777;
+  font-weight: 200;
+}
+.date {
+  text-wrap: nowrap;
+}
+
+/* MOVEMENT PART  */
+.movements {
+  /* grid-column: 1/2; */
+  grid-row: 2 / span 3;
+  overflow: scroll;
+}
+.movements_row {
+  background-color: white;
+  display: flex;
+  min-height: 50px;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 1.5rem;
+  border: 1px solid #eadbdb;
+  padding-inline: 4em;
+  border-radius: 4px;
+}
+
+.movements_type {
+  font-size: 14px;
+  padding-block: 0.25em;
+  padding-inline: 0.5em;
+  border-radius: 30px;
+  font-weight: 500;
+  color: white;
+}
+.movements_type_withdraw {
+  background-image: linear-gradient(to top left, #e52a5a 0%, #ff585f 100%);
+}
+.movements_type_deposit {
+  background-image: linear-gradient(to top left, #39b385 0%, #9be15d 100%);
+}
+.movements_value {
+  font-size: 1.2em;
+}
+
+/* summary  */
+.summary {
+  grid-column: 1/2;
+  grid-row: 5/6;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 2em;
+  align-items: baseline;
+}
+.summary_label {
+  font-size: 0.6em;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-right: 0.8em;
+}
+
+.summary_value {
+  font-size: 1.1em;
+  margin-right: 1.5em;
+}
+.summary_value_in,
+.summary_value_interest {
+  color: #66c873;
+}
+.summary_value_out {
+  color: #f5465d;
+}
+
+/* transfer money  */
+.operations {
+  border-radius: 10px;
+  padding: 2rem;
+}
+.op_transfer {
+  background-image: linear-gradient(to top left, #ffb203 0%, #ffc703 100%);
+}
+.op_loan {
+  background-image: linear-gradient(to top left, #39b385 0%, #9be15d 100%);
+}
+.op_close {
+  background-image: linear-gradient(to top left, #e52a5a 0%, #ff585f 100%);
+}
+.form {
+  display: grid;
+  grid-template-columns: 2.5fr 2.5fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 0.43em 0.25em;
+}
+.form_input {
+  width: 100%;
+  max-width: 20em;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  padding: 0.4em;
+  text-align: center;
+  width: 125px;
+}
+.form_input:focus {
+  outline: none;
+}
+.form .form-loan {
+  grid-template-columns: 2.5fr 1fr 2.5fr;
+}
+.oprations_button {
+  /* background: none; */
+  font-size: 1.06em;
+  padding-inline: 1em;
+  padding-block: 0.3em;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  background-color: white;
+}
+.operations_label {
+  font-weight: 600;
+  font-size: 1.5em;
+  margin-bottom: 1em;
+}
+.logout_timer {
+  /* padding: 0 0.3rem; */
+  text-align: right;
+  margin-top: 1.8rem;
+  font-size: 1rem;
+}
+.time {
+  font-weight: 600;
+}
+
+@media (max-width: 850px) {
+  .app {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-auto-rows: minmax(100px, auto);
+    row-gap: 1rem;
+    /* grid-auto-rows: auto; */
+  }
+}
+
+#transferfeild::after {
+  content: "transfer to";
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.hidden {
+  display: none;
+}
