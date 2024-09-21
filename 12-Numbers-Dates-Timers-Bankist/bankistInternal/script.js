@@ -1,12 +1,59 @@
 "use strict";
 // BANKIST APP
 
+// // Data
+// const account1 = {
+//   owner: "Jonas Schmedtmann",
+//   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+//   interestRate: 1.2, // %
+//   pin: 1111,
+// };
+
+// const account2 = {
+//   owner: "Jessica Davis",
+//   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+//   interestRate: 1.5,
+//   pin: 2222,
+// };
+
+// const account3 = {
+//   owner: "Steven Thomas Williams",
+//   movements: [200, -200, 340, -300, -20, 50, 400, -460],
+//   interestRate: 0.7,
+//   pin: 3333,
+// };
+
+// const account4 = {
+//   owner: "Sarah Smith",
+//   movements: [430, 1000, 700, 50, 90],
+//   interestRate: 1,
+//   pin: 4444,
+// };
+
+// const accounts = [account1, account2, account3, account4];
+
 // Data
+
+// DIFFERENT DATA! Contains movement dates, currency and locale
+
 const account1 = {
   owner: "Jonas Schmedtmann",
-  movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+  movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
   interestRate: 1.2, // %
   pin: 1111,
+
+  movementsDates: [
+    "2019-11-18T21:31:17.178Z",
+    "2019-12-23T07:42:02.383Z",
+    "2020-01-28T09:15:04.904Z",
+    "2020-04-01T10:17:24.185Z",
+    "2020-05-08T14:11:59.604Z",
+    "2020-07-26T17:01:17.194Z",
+    "2020-07-28T23:36:17.929Z",
+    "2020-08-01T10:51:36.790Z",
+  ],
+  currency: "EUR",
+  locale: "pt-PT", // de-DE
 };
 
 const account2 = {
@@ -14,23 +61,22 @@ const account2 = {
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
+
+  movementsDates: [
+    "2019-11-01T13:15:33.035Z",
+    "2019-11-30T09:48:16.867Z",
+    "2019-12-25T06:04:23.907Z",
+    "2020-01-25T14:18:46.235Z",
+    "2020-02-05T16:33:06.386Z",
+    "2020-04-10T14:43:26.374Z",
+    "2020-06-25T18:49:59.371Z",
+    "2020-07-26T12:01:20.894Z",
+  ],
+  currency: "USD",
+  locale: "en-US",
 };
 
-const account3 = {
-  owner: "Steven Thomas Williams",
-  movements: [200, -200, 340, -300, -20, 50, 400, -460],
-  interestRate: 0.7,
-  pin: 3333,
-};
-
-const account4 = {
-  owner: "Sarah Smith",
-  movements: [430, 1000, 700, 50, 90],
-  interestRate: 1,
-  pin: 4444,
-};
-
-const accounts = [account1, account2, account3, account4];
+const accounts = [account1, account2];
 
 //selectors
 const forms = document.querySelectorAll("form");
@@ -65,19 +111,36 @@ const buttoncloseaccount = document.querySelector(".oprations_button-close");
 
 const buttonsort = document.querySelector(".summary_btn");
 
+const balanceDate = document.querySelector(".balance_dates");
+
 //fuctionalities:
+
+const displaytitledate = function (accout) {
+  const datenow = new Date(Date.now());
+  console.log(datenow);
+  balanceDate.textContent = `${datenow.toLocaleDateString()},${datenow.toLocaleTimeString(
+    [],
+    { hour: "2-digit", minute: "2-digit" }
+  )}
+  `;
+};
+displaytitledate();
 //Movements display
 const displayMovements = function (account1) {
   containerMovement.innerHTML = "";
   const objCopy = Object.assign({}, account1);
   objCopy.movements.forEach(function (movement, index) {
     const type = movement > 0 ? "deposit" : "withdraw";
+    const Dates = new Date(
+      Date.parse(objCopy.movementsDates[index])
+    ).toLocaleDateString();
     const newMove = `
       <div class="movements_row">
           <div class="movements_type movements_type_${type}">${
       index + 1
     } ${type}</div>
-          <div class="movements_value">${movement}€</div>
+    <div class="movement_date">${Dates}</div>
+          <div class="movements_value">${movement.toFixed(3)}€</div>
       </div>    
     `;
     containerMovement.insertAdjacentHTML("afterbegin", newMove);
@@ -110,18 +173,18 @@ const caluculateSummary = function (movements, accout) {
   const deposits = movements
     .filter((move) => move > 0)
     .reduce((sum, curr) => sum + curr);
-  lableSummaryIn.textContent = deposits + "€";
+  lableSummaryIn.textContent = deposits.toFixed(5) + "€";
   const out = Math.abs(
     movements.filter((mov) => mov < 0).reduce((sum, curr) => sum + curr)
   );
-  lableSummaryOut.textContent = out + "€";
+  lableSummaryOut.textContent = out.toFixed(3) + "€";
   //for each deposite interest is 1.2%
   const interest = movements
     .filter((move) => move > 0)
     .map((move) => (move * accout.interestRate) / 100)
     .filter((interest) => interest >= 1)
     .reduce((sum, curr) => sum + curr);
-  lableSummaryInterest.textContent = interest + "€";
+  lableSummaryInterest.textContent = interest.toFixed(5) + "€";
   console.log(deposits, out, interest);
 };
 
@@ -283,7 +346,13 @@ buttonsort.addEventListener("click", function (e) {
     return a - b;
   });
   if (isSorted === false) {
-    const objTest = Object.assign({}, { movements: movementCopy });
+    const objTest = Object.assign(
+      {},
+      {
+        movements: movementCopy,
+        movementsDates: userLoggedInCurrent.movementsDates,
+      }
+    );
     console.log(objTest);
     displayMovements(objTest);
     isSorted = true;
@@ -442,3 +511,24 @@ const titleit = function (title) {
   //   .join(" ");
 };
 console.log(titleit("and this is a nice title"));
+const allMovements = document.querySelectorAll(".movements_row");
+const arrofmoves = Array.from(allMovements);
+const colorChange = function () {
+  arrofmoves.forEach((move, index) => {
+    if (index % 2 === 0) {
+      console.log(window.getComputedStyle(move).backgroundColor);
+      if (window.getComputedStyle(move).backgroundColor === "000") {
+        move.style.backgroundColor = "fff";
+      } else {
+        move.style.backgroundColor = "#000";
+      }
+    }
+  });
+};
+
+const balanceValueBtn = document.querySelector(".balance_value");
+if (balanceValueBtn) {
+  balanceValueBtn.addEventListener("click", colorChange);
+} else {
+  console.error("Element with class 'balance_value' not found.");
+}
